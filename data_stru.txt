@@ -14,8 +14,8 @@
     居住地址,cus_address,char(100);
     银行卡号,cus_cardno,char(20);
     开户银行,cus_bank,char(100);
-    卡种代码,card_typecode,char(2); 1-借记卡/2-贷记卡/3-准贷记卡/4-预付费卡
-    卡种名称,card_typename,char(20);
+    卡种代码,card_cardcode,char(2); 1-借记卡/2-贷记卡/3-准贷记卡/4-预付费卡
+    卡种名称,card_cardname,char(20);
     创建机构,cre_branch,char(10);
     创建柜员,cre_teller,char(10);
     创建日期,cre_date,date;
