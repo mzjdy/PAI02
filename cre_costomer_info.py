@@ -34,15 +34,15 @@ import time
 from luhn import *
 
 PWD = os.getcwd()
-file_areano = PWD + '/icbc_areano.txt'
-file_city = PWD + '/cus_cityname.txt'
-file_street = PWD + '/cus_streetname.txt'
-file_lastname = PWD + '/cus_lastname.txt'
-file_firstname = PWD + '/cus_firstname.txt'
-file_email = PWD + '/cus_emailtype.txt'
-file_pid = PWD + '/cus_pidtype.txt'
-file_phone = PWD + '/cus_phonetype.txt'
-file_bin = PWD + '/cardbin.csv'
+file_areano = PWD + '/Parameters/icbc_areano.txt'
+file_city = PWD + '/Parameters/cus_cityname.txt'
+file_street = PWD + '/Parameters/cus_streetname.txt'
+file_lastname = PWD + '/Parameters/cus_lastname.txt'
+file_firstname = PWD + '/Parameters/cus_firstname.txt'
+file_email = PWD + '/Parameters/cus_emailtype.txt'
+file_pid = PWD + '/Parameters/cus_pidtype.txt'
+file_phone = PWD + '/Parameters/cus_phonetype.txt'
+file_bin = PWD + '/Parameters/cardbin.csv'
 
 # 检查依赖文件是否存在
 try:
@@ -224,14 +224,14 @@ def get_cus_info():
 
 
 # 输出文件
-outfile = PWD + '/customer_info.txt'
+outfile = PWD + '/OutFiles/customer_info.txt'
 title = "客户编号,客户姓名,证件类型,证件号码,出生日期,客户性别,婚姻状况,教育程度,客户职业,联系电话,电子邮件,居住状态,居住地址," \
         "银行卡号,开户银行,卡种代码,卡种名称,创建机构,创建柜员,创建日期,创建时间"
 open(outfile, 'w').write(title + '\n')
 info_num = input("请输入拟生成的客户信息条数：")
 for i in range(0, int(info_num)):
     doper = '{:.2%}'.format((i + 1) / int(info_num))
-    print("\r请稍候，正在处理 %s/%s ,已完成%s" % (i + 1, info_num, doper), end='')
+    print("\r请稍候，正在处理第 %s 条记录 ,已完成%s" % (i + 1, doper), end='')
     open(outfile, 'a').write(get_cus_info() + '\n')
 outfile_lines = len(open(outfile).readlines())
-print("\n" + "个人客户信息已生成！共 %s 条，输出文件 %s" % (outfile_lines - 1, outfile))
+print("\n" + "个人客户信息已生成！共 %s 条记录，输出文件 %s" % (outfile_lines - 1, outfile))
