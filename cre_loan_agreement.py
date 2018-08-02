@@ -14,7 +14,7 @@
 #     剩余本金,loan_remamount,float(12,2);
 #     贷款利率,loan_rate,float(6,4);
 #     贷款期限,loan_term,char(5);
-#     期限单位,term_unit,char(1); 0-天/1-月/2-季/3-年
+#     期限单位,loan_termunit,char(1); 0-天/1-月/2-季/3-年
 #     担保方式,loan_guaran,char(1); 0-信用/1-抵押/2-质押/3-保证
 #     生效日期,loan_effdate,date;
 #     到期日期,loan_duedate,date;
@@ -26,32 +26,41 @@ import linecache
 import os
 import random
 import time
+import datetime
+from dateutil.relativedelta import relativedelta
 
 PWD = os.getcwd()
 file_cus_info = PWD + '/OutFiles/customer_info.txt'
 file_loanproduct = PWD + '/Parameters/loan_product.txt'
 file_loanused = PWD + '/Parameters/loan_usedcode.txt'
 
+# 检查工作目录是否存在，不存在则创建目录
+if not os.path.exists(PWD + '/Parameters'):
+    os.mkdir(PWD + '/Parameters')
+
+if not os.path.exists(PWD + '/OutFiles'):
+    os.mkdir(PWD + '/OutFiles')
+
 # 检查依赖文件是否存在
 try:
     f1 = open(file_cus_info)
     f1.close()
 except FileNotFoundError:
-    print("发现错误：个人客户信息文件 \"%s\" 不存在！" % (file_cus_info))
+    print("发现错误：个人客户信息文件 \"%s\" 不存在！" % file_cus_info)
     os._exit(0)
 
 try:
     f1 = open(file_loanproduct)
     f1.close()
 except FileNotFoundError:
-    print("发现错误：贷款产品信息文件 \"%s\" 不存在！" % (file_loanproduct))
+    print("发现错误：贷款产品信息文件 \"%s\" 不存在！" % file_loanproduct)
     os._exit(0)
 
 try:
     f1 = open(file_loanused)
     f1.close()
 except FileNotFoundError:
-    print("发现错误：贷款用途代码文件 \"%s\" 不存在！" % (file_loanused))
+    print("发现错误：贷款用途代码文件 \"%s\" 不存在！" % file_loanused)
     os._exit(0)
 
 
@@ -91,7 +100,7 @@ def get_loan_agreement():
     # 生成贷款利率、期限、期限单位、担保方式、贷款机构
     loan_rate = random.choice(["7.2", "8.4", "9.6", "10.8", "12.0"])
     loan_term = random.choice(["3", "6", "12", "18", "24"])
-    term_unit = '1'
+    loan_termunit = '1'
     loan_guaran = random.choice(["0", "1", "2", "3"])
     loan_branch = cus_id[:4] + "".join(random.choice("0123456789") for i in range(4))
 
@@ -102,13 +111,14 @@ def get_loan_agreement():
     loan_effdate = time.strftime("%Y-%m-%d", randomtime)
 
     # 计算到期日期
-    loan_duedate = loan_effdate
+    predate = datetime.datetime.strptime(loan_effdate, "%Y{y}%m{m}%d{d}".format(y='-', m='-', d=''))
+    loan_duedate = str(predate + relativedelta(months=+int(loan_term)))[:10]
 
     # 格式化输出内容
     loan_result = cus_id + ',' + loan_id + ',' + loan_code + ',' + loan_name + ',' + loan_usedcode + ',' + loan_used \
                   + ',' + loan_amount + ',' + loan_currency + ',' + loan_remamount + ',' + loan_rate + ',' + loan_term \
-                  + ',' + term_unit + ',' + loan_guaran + ',' + loan_effdate + ',' + loan_duedate + ',' + repay_cardno \
-                  + ',' + loan_branch + ',' + loan_stat
+                  + ',' + loan_termunit + ',' + loan_guaran + ',' + loan_effdate + ',' + loan_duedate + ',' + \
+                  repay_cardno + ',' + loan_branch + ',' + loan_stat
 
     return loan_result
 

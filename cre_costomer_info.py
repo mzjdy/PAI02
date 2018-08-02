@@ -44,68 +44,75 @@ file_pid = PWD + '/Parameters/cus_pidtype.txt'
 file_phone = PWD + '/Parameters/cus_phonetype.txt'
 file_bin = PWD + '/Parameters/cardbin.csv'
 
+# 检查工作目录是否存在，不存在则创建目录
+if not os.path.exists(PWD + '/Parameters'):
+    os.mkdir(PWD + '/Parameters')
+
+if not os.path.exists(PWD + '/OutFiles'):
+    os.mkdir(PWD + '/OutFiles')
+
 # 检查依赖文件是否存在
 try:
     f1 = open(file_areano)
     f1.close()
 except FileNotFoundError:
-    print("发现错误：地区号文件 \"%s\" 不存在！" % (file_areano))
+    print("发现错误：地区号文件 \"%s\" 不存在！" % file_areano)
     os._exit(0)
 
 try:
     f1 = open(file_city)
     f1.close()
 except FileNotFoundError:
-    print("发现错误：城市名文件 \"%s\" 不存在！" % (file_city))
+    print("发现错误：城市名文件 \"%s\" 不存在！" % file_city)
     os._exit(0)
 
 try:
     f1 = open(file_street)
     f1.close()
 except FileNotFoundError:
-    print("发现错误：街区名文件 \"%s\" 不存在！" % (file_street))
+    print("发现错误：街区名文件 \"%s\" 不存在！" % file_street)
     os._exit(0)
 
 try:
     f1 = open(file_lastname)
     f1.close()
 except FileNotFoundError:
-    print("发现错误：客户姓氏文件 \"%s\" 不存在！" % (file_lastname))
+    print("发现错误：客户姓氏文件 \"%s\" 不存在！" % file_lastname)
     os._exit(0)
 
 try:
     f1 = open(file_firstname)
     f1.close()
 except FileNotFoundError:
-    print("发现错误：客户名字文件 \"%s\" 不存在！" % (file_firstname))
+    print("发现错误：客户名字文件 \"%s\" 不存在！" % file_firstname)
     os._exit(0)
 
 try:
     f1 = open(file_email)
     f1.close()
 except FileNotFoundError:
-    print("发现错误：邮箱类型文件 \"%s\" 不存在！" % (file_email))
+    print("发现错误：邮箱类型文件 \"%s\" 不存在！" % file_email)
     os._exit(0)
 
 try:
     f1 = open(file_pid)
     f1.close()
 except FileNotFoundError:
-    print("发现错误：身份证区域代码文件 \"%s\" 不存在！" % (file_pid))
+    print("发现错误：身份证区域代码文件 \"%s\" 不存在！" % file_pid)
     os._exit(0)
 
 try:
     f1 = open(file_phone)
     f1.close()
 except FileNotFoundError:
-    print("发现错误：移动电话号段文件 \"%s\" 不存在！" % (file_phone))
+    print("发现错误：移动电话号段文件 \"%s\" 不存在！" % file_phone)
     os._exit(0)
 
 try:
     f1 = open(file_bin)
     f1.close()
 except FileNotFoundError:
-    print("发现错误：银行卡BIN码文件 \"%s\" 不存在！" % (file_bin))
+    print("发现错误：银行卡BIN码文件 \"%s\" 不存在！" % file_bin)
     os._exit(0)
 
 
@@ -132,14 +139,13 @@ def get_cus_info():
     brithendtime = time.mktime((2000, 12, 31, 23, 59, 59, 0, 0, 0))
     randombrith = time.localtime(random.randint(brithstarttime, brithendtime))
     cus_brith = time.strftime("%Y-%m-%d", randombrith)
-    pidbrith = cus_brith[:4] + cus_brith[5:7] + cus_brith[-2:]
+    pidbrith = ''.join(cus_brith.split('-'))
     pidserial = random.randint(100, 999)
     if pidserial % 2 == 0:
         cus_gender = "1"
     else:
         cus_gender = "0"
     prepid = pidcode + pidbrith + str(pidserial)
-    pidi = 0
     pidcount = 0
     pidweight = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2]
     pidcheck = {'0': '1', '1': '0', '2': 'X', '3': '9', '4': '8', '5': '7', '6': '6', '7': '5', '8': '5', '9': '3',

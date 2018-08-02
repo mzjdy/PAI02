@@ -33,7 +33,7 @@
     剩余本金,loan_remamount,float(12,2);
     贷款利率,loan_rate,float(6,4);
     贷款期限,loan_term,char(5);
-    期限单位,term_unit,char(1); 0-天/1-月/2-季/3-年
+    期限单位,loan_termunit,char(1); 0-天/1-月/2-季/3-年
     担保方式,loan_guaran,char(1); 0-信用/1-抵押/2-质押/3-保证
     生效日期,loan_effdate,date;
     到期日期,loan_duedate,date;
@@ -48,6 +48,8 @@
     借据币种,iou_currency,char(3); 001-人民币
     剩余本金,iou_remamount,float(12,2);
     借据利率,iou_rate,float(6,4);
+    借据期限,iou_term,char(5);
+    期限单位,iou_termunit,char(1); 0-天/1-月/2-季/3-年
     还款方式,iou_method,char(1); 0-等额本息/1-等额本金/2-先息后本
     还款顺序,repay_order,char(1); 0-费用_利息_本金/1-本金_利息_费用
     罚息利率,def_rate,float(6,4);
@@ -57,7 +59,7 @@
     展期费率,change_fee,float(6,4);
     生效日期,iou_effdate,date;
     到期日期,iou_duedate,date;
-    借据状态,iou_stat.char(1); 0-正常/1-结清/2-逾期/3-其他
+    借据状态,iou_stat,char(1); 0-正常/1-结清/2-逾期/3-其他
 
 4.还款计划-repay_plan
     协议编号,loan_id,chr(12);
