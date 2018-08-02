@@ -24,7 +24,9 @@
 2.贷款协议-loan_agreement
     客户编号,cus_id,char(12);
     协议编号,loan_id,chr(12);
+    产品编号,loan_code,char(5);
     产品名称,loan_name,char(100);
+    用途代码,loan_usedcode,char(10);
     贷款用途,loan_used,char(100);
     贷款金额,loan_amount,float(12,2);
     贷款币种,loan_currency,char(3); 001-人民币
@@ -32,7 +34,7 @@
     贷款利率,loan_rate,float(6,4);
     贷款期限,loan_term,char(5);
     期限单位,term_unit,char(1); 0-天/1-月/2-季/3-年
-    担保方式,iou_guaran,char(1); 0-信用/1-抵押/2-质押/3-保证
+    担保方式,loan_guaran,char(1); 0-信用/1-抵押/2-质押/3-保证
     生效日期,loan_effdate,date;
     到期日期,loan_duedate,date;
     还款卡号,repay_cardno,char(20);

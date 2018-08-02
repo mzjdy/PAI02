@@ -210,7 +210,7 @@ def get_cus_info():
 
     # 生成创建日期、创建时间
     starttime = time.mktime((2010, 1, 1, 0, 0, 0, 0, 0, 0))
-    endtime = time.mktime((2018, 6, 30, 23, 59, 59, 0, 0, 0))
+    endtime = time.mktime((2017, 12, 31, 23, 59, 59, 0, 0, 0))
     randomtime = time.localtime(random.randint(starttime, endtime))
     cre_datetime = time.strftime("%Y-%m-%d,%H:%M:%S", randomtime)
 
