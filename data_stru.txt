@@ -69,9 +69,9 @@
     应还利息,repay_int,float(12,4);
     应还本金,repay_prin,float(12,4);
     应还本息,repay_amount,float(12,4);
-    还款标志,return_flag,char(1); 0-正常还款/1-部分还款/2-未还款
+    还款标志,return_flag,char(1); 0-未到还款日/1-正常还款/2-部分还款/3-逾期未还
 
-5.还款历史-repay_his
+5.还款历史-repay_history
     协议编号,loan_id,chr(12);
     借据编号,iou_id,char(3);
     还款日期,return_date,date;

@@ -10,7 +10,7 @@
 #     应还利息,repay_int,float(12,4);
 #     应还本金,repay_prin,float(12,4);
 #     应还本息,repay_amount,float(12,4);
-#     还款标志,return_flag,char(1); 0-正常还款/1-部分还款/2-未还款
+#     还款标志,return_flag,char(1); 0-未到还款日/1-正常还款/2-部分还款/3-逾期未还
 
 import os
 import linecache
@@ -32,7 +32,7 @@ try:
     f1 = open(file_loan_iou)
     f1.close()
 except FileNotFoundError:
-    print("发现错误：贷款协议文件 \"%s\" 不存在！" % file_loan_iou)
+    print("发现错误：借据文件 \"%s\" 不存在！" % file_loan_iou)
     os._exit(0)
 
 loaniou_lines = len(open(file_loan_iou).readlines())
@@ -59,7 +59,7 @@ for i in range(2, loaniou_lines + 1):
     term = float(iou[6])
     method = iou[8]
     effdate = iou[15]
-    return_flag = "2"
+    return_flag = "0"  # 初始化还款标志为"未到还款日"
 
     if method == "0":  # 计算等额本息，每月还款额=(贷款本金*月利率*(1+月利率)^还款月数)/((1+月利率)^还款月数－1)
         repay_serial = "1"
