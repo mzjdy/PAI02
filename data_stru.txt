@@ -85,5 +85,5 @@
     借据编号,iou_id,char(3);
     还款期数,repay_serial,char(5);
     欠还利息,def_int,float(12,2);
-    欠还本金,def_ptin,float(12,2);
+    欠还本金,def_prin,float(12,2);
     欠款本息,def_amount,float(12,2);

@@ -17,15 +17,17 @@
 #     还款期数,repay_serial,char(5);
 #     应还日期,repay_date,date;
 #     欠还利息,def_int,float(12,2);
-#     欠还本金,def_ptin,float(12,2);
+#     欠还本金,def_prin,float(12,2);
 #     欠款本息,def_amount,float(12,2);
 
-import os
-import linecache
 import datetime
-import time
+import linecache
+import os
+import random
 
 PWD = os.getcwd()
+file_loan_agr = PWD + '/OutFiles/loan_agreement.txt'
+file_loan_iou = PWD + '/OutFiles/loan_iou.txt'
 file_repay_plan = PWD + '/OutFiles/repay_plan.txt'
 
 # 检查工作目录是否存在，不存在则创建目录
@@ -36,6 +38,20 @@ if not os.path.exists(PWD + '/OutFiles'):
     os.mkdir(PWD + '/OutFiles')
 
 # 检查依赖文件是否存在
+try:
+    f1 = open(file_loan_agr)
+    f1.close()
+except FileNotFoundError:
+    print("发现错误：贷款协议文件 \"%s\" 不存在！" % file_loan_agr)
+    os._exit(0)
+
+try:
+    f1 = open(file_loan_iou)
+    f1.close()
+except FileNotFoundError:
+    print("发现错误：借据文件 \"%s\" 不存在！" % file_loan_iou)
+    os._exit(0)
+
 try:
     f1 = open(file_repay_plan)
     f1.close()
@@ -56,19 +72,37 @@ open(outfile2, "w").write(title2 + '\n')
 
 today = datetime.datetime.today()
 
-for i in range(2, repayplan_lines + 1):
-    if i != repayplan_lines:
-        rec_s = linecache.getline(file_repay_plan, i).strip('\n').split(',')
-        rec_t = linecache.getline(file_repay_plan, i + 1).strip('\n').split(',')
-    else:
-        rec_s = linecache.getline(file_repay_plan, i - 1).strip('\n').split(',')
-        rec_t = linecache.getline(file_repay_plan, i).strip('\n').split(',')
-    s_id = rec_s[0]
-    t_id = rec_t[0]
+for i in range(3, repayplan_lines + 1):
+    # for i in range(3,30):
+    rec_s = linecache.getline(file_repay_plan, i - 1).strip('\n').split(',')
+    s_id = rec_s[0] + rec_s[1]
     s_date = datetime.datetime.strptime(rec_s[3], "%Y-%m-%d")
+    s_flag = rec_s[7]
+    s_int = rec_s[4]
+    s_prin = rec_s[5]
+    s_amount = rec_s[6]
+    rec_t = linecache.getline(file_repay_plan, i).strip('\n').split(',')
+    t_id = rec_t[0] + rec_t[1]
     t_date = datetime.datetime.strptime(rec_t[3], "%Y-%m-%d")
-    if s_id == t_id and today >= s_date:
+    t_flag = rec_t[7]
+    t_int = rec_t[4]
+    t_prin = rec_t[5]
+    t_amount = rec_t[6]
+    if s_id == t_id and today > s_date:
+        PD = random.random()
+        if PD > 0.9:
+            rec_s.remove("0")
+            rec_s.append("3")
+            newrec = ','.join(rec_s)
+            open(file_repay_plan)
+        else:
+            rec_s.remove("0")
+            rec_s.append("1")
+            newrec = ','.join(rec_s)
 
-print(today, s_date, t_date)
-print(today >= s_date)
-print(s_date < t_date)
+        print(str(PD), rec_s)
+        print(str(PD), rec_t)
+
+# print(today, s_date, t_date)
+# print(today >= s_date)
+# print(s_date < t_date)

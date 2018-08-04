@@ -199,34 +199,34 @@ def get_cus_info():
                 if i["卡BIN取值"] == targebin:
                     return i
 
-    cardpara = get_cardpara()
-    cus_bank = cardpara["发卡行名"]
-    cardlen = cardpara["卡号长度"]
-    binlen = cardpara["卡BIN长度"]
-    cardbin = cardpara["卡BIN取值"]
-    cus_cardcode = cardpara["卡种代码"]
-    cus_cardname = cardpara["卡种"]
-    cardran = int(cardlen) - int(binlen) - 1
-    precardno = cardbin + "".join(random.choice("0123456789") for i in range(cardran))
-    cus_cardno = append(precardno)
+        cardpara = get_cardpara()
+        cus_bank = cardpara["发卡行名"]
+        cardlen = cardpara["卡号长度"]
+        binlen = cardpara["卡BIN长度"]
+        cardbin = cardpara["卡BIN取值"]
+        cus_cardcode = cardpara["卡种代码"]
+        cus_cardname = cardpara["卡种"]
+        cardran = int(cardlen) - int(binlen) - 1
+        precardno = cardbin + "".join(random.choice("0123456789") for i in range(cardran))
+        cus_cardno = append(precardno)
 
-    # 生成创建机构、创建柜员
-    cre_branch = areano + "".join(random.choice("0123456789") for i in range(4))
-    cre_teller = "".join(random.choice("0123456789") for i in range(4))
+        # 生成创建机构、创建柜员
+        cre_branch = areano + "".join(random.choice("0123456789") for i in range(4))
+        cre_teller = "".join(random.choice("0123456789") for i in range(4))
 
-    # 生成创建日期、创建时间
-    starttime = time.mktime((2010, 1, 1, 0, 0, 0, 0, 0, 0))
-    endtime = time.mktime((2017, 12, 31, 23, 59, 59, 0, 0, 0))
-    randomtime = time.localtime(random.randint(starttime, endtime))
-    cre_datetime = time.strftime("%Y-%m-%d,%H:%M:%S", randomtime)
+        # 生成创建日期、创建时间
+        starttime = time.mktime((2010, 1, 1, 0, 0, 0, 0, 0, 0))
+        endtime = time.mktime((2017, 12, 31, 23, 59, 59, 0, 0, 0))
+        randomtime = time.localtime(random.randint(starttime, endtime))
+        cre_datetime = time.strftime("%Y-%m-%d,%H:%M:%S", randomtime)
 
-    # 格式化输出内容
-    cus_result = cus_id + ',' + cus_name + ',' + cus_pid + ',' + cus_brith + ',' + cus_gender + ',' + mar_status \
-                 + ',' + edu_level + ',' + occ_type + ',' + cus_phone + ',' + cus_email + ',' + live_type + ',' + \
-                 cus_address + ',' + cus_cardno + ',' + cus_bank + ',' + cus_cardcode + ',' + cus_cardname + ',' + \
-                 cre_branch + ',' + cre_teller + ',' + cre_datetime
+        # 格式化输出内容
+        cus_result = cus_id + ',' + cus_name + ',' + cus_pid + ',' + cus_brith + ',' + cus_gender + ',' + mar_status \
+                     + ',' + edu_level + ',' + occ_type + ',' + cus_phone + ',' + cus_email + ',' + live_type + ',' + \
+                     cus_address + ',' + cus_cardno + ',' + cus_bank + ',' + cus_cardcode + ',' + cus_cardname + ',' + \
+                     cre_branch + ',' + cre_teller + ',' + cre_datetime
 
-    return cus_result
+        return cus_result
 
 
 # 输出文件
