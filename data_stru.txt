@@ -74,16 +74,19 @@
 5.还款历史-repay_history
     协议编号,loan_id,chr(12);
     借据编号,iou_id,char(3);
-    还款日期,return_date,date;
     还款期数,return_bill,char(5);
-    还款金额,return_amount,float(12,2);
+    还款日期,return_date,date;
     实还利息,return_imt,float(12,2);
     实还本金,return_prin,flost(12,2);
+    还款金额,return_amount,float(12,2);
+    还款标志,return_flag,char(1);
 
 6.贷款违约-loan_default
     协议编号,loan_id,chr(12);
     借据编号,iou_id,char(3);
     还款期数,repay_serial,char(5);
+    应还日期,repay_date,date;
     欠还利息,def_int,float(12,2);
     欠还本金,def_prin,float(12,2);
     欠款本息,def_amount,float(12,2);
+    还款标志,return_flag,char(1);

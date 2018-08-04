@@ -5,12 +5,13 @@
 # 还款历史-repay_history
 #     协议编号,loan_id,chr(12);
 #     借据编号,iou_id,char(3);
-#     还款日期,return_date,date;
 #     还款期数,return_bill,char(5);
-#     还款金额,return_amount,float(12,2);
+#     还款日期,return_date,date;
 #     实还利息,return_imt,float(12,2);
 #     实还本金,return_prin,flost(12,2);
-
+#     还款金额,return_amount,float(12,2);
+#     还款标志,return_flag,char(1);
+#
 # 贷款违约-loan_default
 #     协议编号,loan_id,chr(12);
 #     借据编号,iou_id,char(3);
@@ -19,11 +20,13 @@
 #     欠还利息,def_int,float(12,2);
 #     欠还本金,def_prin,float(12,2);
 #     欠款本息,def_amount,float(12,2);
+#     还款标志,return_flag,char(1);
 
 import datetime
 import linecache
 import os
 import random
+from typing import List
 
 PWD = os.getcwd()
 file_loan_agr = PWD + '/OutFiles/loan_agreement.txt'
@@ -59,50 +62,93 @@ except FileNotFoundError:
     print("发现错误：还款计划文件 \"%s\" 不存在！" % file_repay_plan)
     os._exit(0)
 
-repayplan_lines = len(open(file_repay_plan).readlines())
-print("找到 %s 条还款计划数据，正在生成还款历史及违约信息！" % (repayplan_lines - 1))
+daypara = input('请输入参照日期(YYYY-MM-DD): ')
+today = datetime.datetime.strptime(daypara, "%Y-%m-%d")
+PDpara = 0.9
+
+repaylist = open(file_repay_plan).readlines()[1:]
+repayplan_lines = len(repaylist)
+print("找到 %s 条还款计划数据，正在生成还款历史及违约信息……" % (repayplan_lines))
 
 outfile1 = PWD + '/OutFiles/repay_history.txt'
-title1 = "协议编号,借据编号,还款日期,还款期数,还款金额,实还利息,实还本金"
+title1 = "协议编号,借据编号,还款期数,还款日期,实还利息,实还本金,还款金额,还款标志"
 open(outfile1, "w").write(title1 + '\n')
 
 outfile2 = PWD + '/OutFiles/loan_defult.txt'
-title2 = "协议编号,借据编号,还款期数,应还日期,欠还利息,欠还本金,欠还本息"
+title2 = "协议编号,借据编号,还款期数,应还日期,欠还利息,欠还本金,欠还本息,还款标志"
 open(outfile2, "w").write(title2 + '\n')
 
-today = datetime.datetime.today()
+tempfile = PWD + '/OutFiles/batch_temp.txt'
 
-for i in range(3, repayplan_lines + 1):
-    # for i in range(3,30):
-    rec_s = linecache.getline(file_repay_plan, i - 1).strip('\n').split(',')
+# today = datetime.datetime.today()
+# today = datetime.datetime.strptime('2099-01-01',"%Y-%m-%d")
+
+for i in range(0, repayplan_lines - 1):
+    rec_s = repaylist[i].strip('\n').split(',')
     s_id = rec_s[0] + rec_s[1]
     s_date = datetime.datetime.strptime(rec_s[3], "%Y-%m-%d")
     s_flag = rec_s[7]
-    s_int = rec_s[4]
-    s_prin = rec_s[5]
-    s_amount = rec_s[6]
-    rec_t = linecache.getline(file_repay_plan, i).strip('\n').split(',')
+    rec_t = repaylist[i + 1].strip('\n').split(',')
     t_id = rec_t[0] + rec_t[1]
     t_date = datetime.datetime.strptime(rec_t[3], "%Y-%m-%d")
     t_flag = rec_t[7]
-    t_int = rec_t[4]
-    t_prin = rec_t[5]
-    t_amount = rec_t[6]
-    if s_id == t_id and today > s_date:
-        PD = random.random()
-        if PD > 0.9:
-            rec_s.remove("0")
-            rec_s.append("3")
-            newrec = ','.join(rec_s)
-            open(file_repay_plan)
+    PD = random.random()
+    # 分别处理初笔、末笔、中间数据，并写入中间文件
+    if i == 0 and today > s_date:
+        if PD > PDpara:
+            rec_s[-1] = '3'
+            if today > t_date:
+                rec_t[-1] = '3'
         else:
-            rec_s.remove("0")
-            rec_s.append("1")
-            newrec = ','.join(rec_s)
+            rec_s[-1] = '1'
+            if today > t_date:
+                rec_t[-1] = '1'
+        open(tempfile, 'w').write(','.join(rec_s) + '\n')
+        open(tempfile, 'a').write(','.join(rec_t) + '\n')
+    elif i == repayplan_lines - 1 and today > s_date:
+        if PD > PDpara:
+            rec_t[-1] = '3'
+        elif today > s_date:
+            rec_t[-1] = '1'
+        open(tempfile, 'w').write(','.join(rec_t) + '\n')
+    elif today > t_date:
+        if PD > PDpara:
+            rec_t[-1] = '3'
+        else:
+            rec_t[-1] = '1'
+        open(tempfile, 'a').write(','.join(rec_t) + '\n')
+    doper = '{:.2%}'.format((i + 1) / repayplan_lines)
+    print("\r请稍候，正在处理第 %s 条记录 ,已完成 %s" % (i + 2, doper), end='')
 
-        print(str(PD), rec_s)
-        print(str(PD), rec_t)
+# 处理中间文件：同一笔记录违约之后必违约
+templist = open(tempfile).readlines()
+print("\n\n" + "中间文件已生成！共 %s 条记录，正在处理……" % (len(templist)))
+for t in range(0, len(templist) - 1):
+    rec_s = templist[t].strip('\n').split(',')
+    s_id = rec_s[0] + rec_s[1]
+    rec_t = templist[t + 1].strip('\n').split(',')
+    t_id = rec_t[0] + rec_t[1]
+    if s_id == t_id:
+        if rec_s[-1] == '3':
+            rec_t[-1] = '3'
+            newrec = ','.join(rec_t) + '\n'
+            templist[t + 1] = newrec
+    # doper = '{:.2%}'.format((t + 2) / len(templist))
+    # print("\r请稍候，正在处理第 %s 条记录 ,已完成 %s" % (t + 2, doper), end='')
+open(tempfile, 'w').writelines(templist)
 
-# print(today, s_date, t_date)
-# print(today >= s_date)
-# print(s_date < t_date)
+templist = open(tempfile).readlines()
+# print("\n\n" + "共 %s 条记录，正在输出文件……" % (len(templist)))
+for t in range(0, len(templist)):
+    rec_s = templist[t].strip('\n').split(',')
+    if rec_s[-1] == '3':
+        open(outfile2, 'a').write(','.join(rec_s) + '\n')
+    else:
+        open(outfile1, 'a').write(','.join(rec_s) + '\n')
+    doper = '{:.2%}'.format((t + 1) / len(templist))
+    print("\r请稍候，正在处理第 %s 条记录 ,已完成 %s" % (t + 1, doper), end='')
+
+outfile1_lines = len(open(outfile1).readlines())
+outfile2_lines = len(open(outfile2).readlines())
+print("\n\n" + "还款历史文件已生成！共 %s 条记录，输出文件 %s" % (outfile1_lines - 1, outfile1))
+print("违约历史文件已生成！共 %s 条记录，输出文件 %s" % (outfile2_lines - 1, outfile2))

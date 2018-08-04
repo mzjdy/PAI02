@@ -237,7 +237,7 @@ open(outfile, 'w').write(title + '\n')
 info_num = input("请输入拟生成的客户信息条数：")
 for i in range(0, int(info_num)):
     doper = '{:.2%}'.format((i + 1) / int(info_num))
-    print("\r请稍候，正在处理第 %s 条记录 ,已完成%s" % (i + 1, doper), end='')
+    print("\r请稍候，正在处理第 %s 条记录 ,已完成 %s" % (i + 1, doper), end='')
     open(outfile, 'a').write(get_cus_info() + '\n')
 outfile_lines = len(open(outfile).readlines())
 print("\n" + "个人客户信息已生成！共 %s 条记录，输出文件 %s" % (outfile_lines - 1, outfile))

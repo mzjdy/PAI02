@@ -101,7 +101,7 @@ for i in range(2, loaniou_lines + 1):
         open(outfile, "a").write(plan + '\n')
 
     doper = '{:.2%}'.format((i - 1) / (int(loaniou_lines) - 1))
-    print("\r请稍候，正在处理第 %s 条记录 ,已完成%s" % (i - 1, doper), end='')
+    print("\r请稍候，正在处理第 %s 条记录 ,已完成 %s" % (i - 1, doper), end='')
 
 outfile_lines = len(open(outfile).readlines())
 print("\n" + "还款计划已生成！共 %s 条记录，输出文件 %s" % (outfile_lines - 1, outfile))
