@@ -3,27 +3,33 @@
 # -*- 2018.07.31
 
 # 个人客户信息-customer_info
-#     客户编号,cus_id,char(12);
-#     客户姓名,cus_name,char(20);
-#     证件类型,id_type,char(1); 0-居民身份证
-#     证件号码,id_num,char(20);
-#     出生日期,cus_brith,date;
-#     客户性别,cus_gender,char(1); 0-男/1-女
-#     婚姻状况,mar_status,char(1); 0-已婚/1-未婚/2-其他
-#     教育程度,edu_level,char(1); 0-初中及以下/1-高中/2-大学/3-硕士研究生/4-博士研究生
-#     客户职业,occ_type,char(2); 0-公务员/1-事业员工/2-金融员工/3-公司职员/4-军人/5-学生/6-自由职业/7-其他
-#     联系电话,cus_phone,char(20);
-#     电子邮件,cus_email,char(30);
-#     居住类型,live_type,char(1); 0-自有无贷款/1-自有有贷款/2-租赁/3-宿舍/4-其他
-#     居住地址,cus_address,char(100);
-#     银行卡号,cus_cardno,char(20); luhn校验
-#     开户银行,cus_bank,char(100);
-#     卡种代码,card_cardcode,char(2); 1-借记卡/2-贷记卡/3-准贷记卡/4-预付费卡
-#     卡种名称,card_cardname,char(20);
-#     创建机构,cre_branch,char(10);
-#     创建柜员,cre_teller,char(10);
-#     创建日期,cre_date,date;
-#     创建时间,cre_time,time;
+# 客户编号, cus_id, char(12);
+# 客户姓名, cus_name, char(20);
+# 证件类型, cus_idtype, char(1);
+#       0 - 居民身份证
+# 证件号码, cus_idnum, char(20);
+# 出生日期, cus_brith, date;
+# 客户性别, cus_gender, char(1);
+#       0 - 男 / 1 - 女
+# 婚姻状况, cus_marry, char(1);
+#       0 - 已婚 / 1 - 未婚 / 2 - 其他
+# 教育程度, cus_edu, char(1);
+#       0 - 初中及以下 / 1 - 高中 / 2 - 大学 / 3 - 硕士研究生 / 4 - 博士研究生
+# 客户职业, cus_occ, char(2);
+#       0 - 公务员 / 1 - 事业员工 / 2 - 金融员工 / 3 - 公司职员 / 4 - 军人 / 5 - 学生 / 6 - 自由职业 / 7 - 其他
+# 联系电话, cus_phone, char(20);
+# 电子邮件, cus_email, char(50);
+# 居住类型, cus_livetype, char(1);
+#       0 - 自有无贷款 / 1 - 自有有贷款 / 2 - 租赁 / 3 - 宿舍 / 4 - 其他
+# 居住地址, cus_address, char(100);
+# 开户银行, cus_bank, char(100);
+# 卡种代码, cus_cardcode, char(2);
+#       1 - 借记卡 / 2 - 贷记卡 / 3 - 准贷记卡 / 4 - 预付费卡
+# 卡种名称, cus_cardname, char(20);
+# 银行卡号, cus_cardno, char(20);
+# 创建机构, cre_branch, char(10);
+# 创建柜员, cre_teller, char(10);
+# 创建时间, cre_datetime, datetime;
 
 import csv
 import linecache
@@ -32,6 +38,8 @@ import random
 import time
 
 from luhn import *
+
+# from pymysql.connections import *
 
 PWD = os.getcwd()
 file_areano = PWD + '/Parameters/icbc_areano.txt'
@@ -226,7 +234,15 @@ def get_cus_info():
                      cus_address + ',' + cus_cardno + ',' + cus_bank + ',' + cus_cardcode + ',' + cus_cardname + ',' + \
                      cre_branch + ',' + cre_teller + ',' + cre_datetime
 
-        return cus_result
+        return cus_result, cus_id
+
+
+# 输出到数据库表
+# con = pymysql.connect(user='python', passwd='pythonpwd', db='PAI',charset='utf8')
+# cur = con.cursor()
+# # cur.execute('use PAI;')
+# cur.execute('insert into customer_info(cus_id) values get_cus_info()[1];')
+# con.commit()
 
 
 # 输出文件
