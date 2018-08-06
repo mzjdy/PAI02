@@ -2,32 +2,14 @@
 # -*- Richard(410982635@qq.com)
 # -*- 2018.08.01
 
-# 贷款协议-loan_agreement
-#     客户编号,cus_id,char(12);
-#     协议编号,loan_id,chr(12);
-#     产品编号,loan_code,char(5);
-#     产品名称,loan_name,char(100);
-#     用途代码,loan_usedcode,char(10);
-#     贷款用途,loan_used,char(100);
-#     贷款金额,loan_amount,float(12,2);
-#     贷款币种,loan_currency,char(3); 001-人民币
-#     剩余本金,loan_remamount,float(12,2);
-#     贷款利率,loan_rate,float(6,4);
-#     贷款期限,loan_term,char(5);
-#     期限单位,loan_termunit,char(1); 0-天/1-月/2-季/3-年
-#     担保方式,loan_guaran,char(1); 0-信用/1-抵押/2-质押/3-保证
-#     生效日期,loan_effdate,date;
-#     到期日期,loan_duedate,date;
-#     还款卡号,repay_cardno,char(20);
-#     贷款机构,loan_branch,char(10);
-#     贷款状态,loan_stat,char(1); 0-正常/1-结清/2-逾期/3-其他
-
+import datetime
 import linecache
 import os
 import random
 import time
-import datetime
+
 from dateutil.relativedelta import relativedelta
+from tqdm import *
 
 PWD = os.getcwd()
 file_cus_info = PWD + '/OutFiles/customer_info.txt'
@@ -69,7 +51,7 @@ def get_loan_agreement():
     cusifno_lines = len(open(file_cus_info).readlines())
     record = linecache.getline(file_cus_info, random.randint(2, cusifno_lines)).split(',')
     cus_id = record[0]
-    repay_cardno = record[13]
+    repay_cardno = record[16]
 
     loan_id = cus_id[:4] + "".join(random.choice("0123456789") for i in range(8))
 
@@ -128,10 +110,10 @@ outfile = PWD + '/OutFiles/loan_agreement.txt'
 title = "客户编号,协议编号,产品编号,产品名称,用途代码,贷款用途,贷款金额,贷款币种,剩余本金,贷款利率,贷款期限,期限单位,担保方式," \
         "生效日期,到期日期,还款卡号,贷款机构,贷款状态"
 open(outfile, "w").write(title + '\n')
-info_num = input("请输入拟生成的贷款协议条数：")
-for i in range(0, int(info_num)):
-    doper = '{:.2%}'.format((i + 1) / int(info_num))
-    print("\r请稍候，正在处理第 %s 条记录 ,已完成 %s" % (i + 1, doper), end='')
+info_num = input('\r' + "请输入拟生成的贷款协议条数：")
+for i in tqdm(range(0, int(info_num))):
+    # doper = '{:.2%}'.format((i + 1) / int(info_num))
+    # print("\r请稍候，正在处理第 %s 条记录 ,已完成 %s" % (i + 1, doper), end='')
     open(outfile, 'a').write(get_loan_agreement() + '\n')
 outfile_lines = len(open(outfile).readlines())
-print("\n" + "贷款协议已生成！共 %s 条记录，输出文件 %s" % (outfile_lines - 1, outfile))
+print("贷款协议已生成！共 %s 条记录，输出文件 %s" % (outfile_lines - 1, outfile))

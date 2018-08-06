@@ -2,20 +2,12 @@
 # -*- Richard(410982635@qq.com)
 # -*- 2018.08.02
 
-# 还款计划-repay_plan
-#     协议编号,loan_id,chr(12);
-#     借据编号,iou_id,char(3);
-#     还款期数,repay_serial,char(5);
-#     应还日期,repay_date,date;
-#     应还利息,repay_int,float(12,4);
-#     应还本金,repay_prin,float(12,4);
-#     应还本息,repay_amount,float(12,4);
-#     还款标志,return_flag,char(1); 0-未到还款日/1-正常还款/2-部分还款/3-逾期未还
-
-import os
-import linecache
 import datetime
+import linecache
+import os
+
 from dateutil.relativedelta import relativedelta
+from tqdm import *
 
 PWD = os.getcwd()
 file_loan_iou = PWD + '/OutFiles/Loan_iou.txt'
@@ -36,7 +28,7 @@ except FileNotFoundError:
     os._exit(0)
 
 loaniou_lines = len(open(file_loan_iou).readlines())
-print("找到 %s 条借据数据，正在生成还款计划信息！" % (loaniou_lines - 1))
+print('\r' + "找到 %s 条借据数据，正在生成还款计划信息……" % (loaniou_lines - 1))
 
 outfile = PWD + '/OutFiles/repay_plan.txt'
 title = "协议编号,借据编号,还款期数,应还日期,应还利息,应还本金,应还本息,还款标志"
@@ -49,7 +41,7 @@ def cal_date(date, para):
     return t
 
 
-for i in range(2, loaniou_lines + 1):
+for i in tqdm(range(2, loaniou_lines + 1)):
     iou = linecache.getline(file_loan_iou, i).split(',')
     loan_id = iou[0]
     iou_id = iou[1]
@@ -100,8 +92,8 @@ for i in range(2, loaniou_lines + 1):
                + ',' + '{:.2f}'.format(amount) + ',' + '{:.2f}'.format(int_m + amount) + ',' + return_flag
         open(outfile, "a").write(plan + '\n')
 
-    doper = '{:.2%}'.format((i - 1) / (int(loaniou_lines) - 1))
-    print("\r请稍候，正在处理第 %s 条记录 ,已完成 %s" % (i - 1, doper), end='')
+    # doper = '{:.2%}'.format((i - 1) / (int(loaniou_lines) - 1))
+    # print("\r请稍候，正在处理第 %s 条记录 ,已完成 %s" % (i - 1, doper), end='')
 
 outfile_lines = len(open(outfile).readlines())
-print("\n" + "还款计划已生成！共 %s 条记录，输出文件 %s" % (outfile_lines - 1, outfile))
+print("还款计划已生成！共 %s 条记录，输出文件 %s" % (outfile_lines - 1, outfile))
