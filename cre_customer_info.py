@@ -212,7 +212,13 @@ outfile = PWD + '/OutFiles/customer_info.txt'
 title = "客户编号,客户姓名,证件类型,证件号码,出生日期,客户性别,婚姻状况,教育程度,客户职业,联系电话,电子邮件,居住状态,居住地址," \
         "银行卡号,开户银行,卡种代码,卡种名称,创建机构,创建柜员,创建日期,创建时间"
 open(outfile, 'w').write(title + '\n')
-info_num = input('\r' + "请输入拟生成的客户信息条数：")
+# info_num = input('\r' + "请输入拟生成的客户信息条数：")
+while True:
+    info_num = input('\r' + "请输入拟生成的客户信息数量：")
+    if str.isdigit(info_num) == True:
+        break
+    else:
+        print('数字格式不合法，请重新输入……')
 for i in tqdm(range(0, int(info_num))):
     # doper = '{:.2%}'.format((i + 1) / int(info_num))
     # print("\r请稍候，正在处理第 %s 条记录 ,已完成 %s" % (i + 1, doper), end='')

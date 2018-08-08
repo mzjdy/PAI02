@@ -165,4 +165,4 @@ for i in tqdm(range(2, t_lines + 2)):
 cur.execute('select count(*) from PAI.loan_default;')
 print("\r" + "还款计划信息已转换完成！共输出 %s 条记录。" % (cur.fetchone()))
 
-print("\n" + "文件转换完成！执行结束！")
+# print("\n" + "文件转换完成！执行结束！")

@@ -5,6 +5,7 @@
 import datetime
 import os
 import random
+import time
 
 from tqdm import *
 
@@ -42,7 +43,21 @@ except FileNotFoundError:
     print("发现错误：还款计划文件 \"%s\" 不存在！" % file_repay_plan)
     os._exit(0)
 
-daypara = input('\r' + '请输入参照日期(YYYY-MM-DD): ')
+
+def isDate(daypara):
+    try:
+        time.strptime(daypara, "%Y-%m-%d")
+        return True
+    except:
+        return False
+
+
+while True:
+    daypara = input('\r' + '请输入模拟批量的日期(YYYY-MM-DD): ')
+    if isDate(daypara) == True:
+        break
+    else:
+        print('日期格式不合法，请重新输入……')
 today = datetime.datetime.strptime(daypara, "%Y-%m-%d")
 PDpara = 0.9
 

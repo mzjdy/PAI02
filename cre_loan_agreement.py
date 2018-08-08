@@ -110,7 +110,13 @@ outfile = PWD + '/OutFiles/loan_agreement.txt'
 title = "客户编号,协议编号,产品编号,产品名称,用途代码,贷款用途,贷款金额,贷款币种,剩余本金,贷款利率,贷款期限,期限单位,担保方式," \
         "生效日期,到期日期,还款卡号,贷款机构,贷款状态"
 open(outfile, "w").write(title + '\n')
-info_num = input('\r' + "请输入拟生成的贷款协议条数：")
+# info_num = input('\r' + "请输入拟生成的贷款协议条数：")
+while True:
+    info_num = input('\r' + "请输入拟生成的贷款协议数量：")
+    if str.isdigit(info_num) == True:
+        break
+    else:
+        print('数字格式不合法，请重新输入……')
 for i in tqdm(range(0, int(info_num))):
     # doper = '{:.2%}'.format((i + 1) / int(info_num))
     # print("\r请稍候，正在处理第 %s 条记录 ,已完成 %s" % (i + 1, doper), end='')
