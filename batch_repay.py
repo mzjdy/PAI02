@@ -63,7 +63,7 @@ PDpara = 0.9
 
 repaylist = open(file_repay_plan).readlines()[1:]
 repayplan_lines = len(repaylist)
-print('\r' + "找到 %s 条还款计划数据，正在生成还款历史及违约信息……" % (repayplan_lines))
+print('\r' + "找到 %s 条还款计划数据，正在生成还款历史及违约历史信息……" % (repayplan_lines))
 
 outfile1 = PWD + '/OutFiles/repay_history.txt'
 title1 = "协议编号,借据编号,还款期数,还款日期,实还利息,实还本金,还款金额,还款标志"
@@ -74,9 +74,6 @@ title2 = "协议编号,借据编号,还款期数,应还日期,欠还利息,欠�
 open(outfile2, "w").write(title2 + '\n')
 
 tempfile = PWD + '/OutFiles/batch_temp.txt'
-
-# today = datetime.datetime.today()
-# today = datetime.datetime.strptime('2099-01-01',"%Y-%m-%d")
 
 for i in tqdm(range(0, repayplan_lines - 1)):
     rec_s = repaylist[i].strip('\n').split(',')
@@ -112,8 +109,6 @@ for i in tqdm(range(0, repayplan_lines - 1)):
         else:
             rec_t[-1] = '1'
         open(tempfile, 'a').write(','.join(rec_t) + '\n')
-    # doper = '{:.2%}'.format((i + 1) / repayplan_lines)
-    # print("\r请稍候，正在处理第 %s 条记录 ,已完成 %s" % (i + 2, doper), end='')
 
 # 处理中间文件：同一笔记录违约之后必违约
 templist = open(tempfile).readlines()
@@ -128,20 +123,16 @@ for t in range(0, len(templist) - 1):
             rec_t[-1] = '3'
             newrec = ','.join(rec_t) + '\n'
             templist[t + 1] = newrec
-    # doper = '{:.2%}'.format((t + 2) / len(templist))
-    # print("\r请稍候，正在处理第 %s 条记录 ,已完成 %s" % (t + 2, doper), end='')
-open(tempfile, 'w').writelines(templist)
 
+open(tempfile, 'w').writelines(templist)
 templist = open(tempfile).readlines()
-# print("\n\n" + "共 %s 条记录，正在输出文件……" % (len(templist)))
+
 for t in tqdm(range(0, len(templist))):
     rec_s = templist[t].strip('\n').split(',')
     if rec_s[-1] == '3':
         open(outfile2, 'a').write(','.join(rec_s) + '\n')
     else:
         open(outfile1, 'a').write(','.join(rec_s) + '\n')
-    # doper = '{:.2%}'.format((t + 1) / len(templist))
-    # print("\r请稍候，正在处理第 %s 条记录 ,已完成 %s" % (t + 1, doper), end='')
 
 outfile1_lines = len(open(outfile1).readlines())
 outfile2_lines = len(open(outfile2).readlines())

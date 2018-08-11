@@ -1,3 +1,7 @@
+# -*- Codeing:UTF-8
+# -*- Richard(410982635@qq.com)
+# -*- 2018.08.08
+
 import pymysql
 
 # 连接mySQL服务器

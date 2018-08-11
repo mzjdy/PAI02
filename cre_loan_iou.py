@@ -67,8 +67,6 @@ for i in tqdm(range(2, loanagr_lines + 1)):
                  iou_effdate + ',' + iou_duedate + ',' + iou_stat
 
     # 输出文件
-    # doper = '{:.2%}'.format(i / int(loanagr_lines))
-    # print("\r请稍候，正在处理第 %s 条记录 ,已完成 %s" % (i - 1, doper), end='')
     open(outfile, 'a').write(iou_result + '\n')
 outfile_lines = len(open(outfile).readlines())
 print('\r' + "借据已生成！共 %s 条记录，输出文件 %s" % (outfile_lines - 1, outfile))

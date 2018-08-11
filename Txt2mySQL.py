@@ -1,3 +1,7 @@
+# -*- Codeing:UTF-8
+# -*- Richard(410982635@qq.com)
+# -*- 2018.08.07
+
 import linecache
 import os
 

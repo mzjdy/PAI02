@@ -1,7 +1,9 @@
 OK 判断输入参数的合法性（数字、日期）>>cre_customer_info.py cre_loan_agreement.py batch_repay.py
-根据还款记录更新协议、借据中的剩余本金>>UpdateAmount.py
+OK 根据还款记录更新协议、借据中的剩余本金>>UpdateAmount.py
+更新还款标志>>UpdateAmount.py
+更新违约金额、违约期数
 OK 优化还款计划计算精确度>>cre_repay_plan.py
 OK 计算程序执行的总时间（hms格式）>>main.py
 OK mySQL建库、建表>>cre_database.py
 PASS 通过xml文件配置连接数据库参数>>database_config.xml
-封装包文件
+PASS 封装包文件
