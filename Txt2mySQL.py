@@ -163,6 +163,6 @@ for i in tqdm(range(2, t_lines + 2)):
     # doper = '{:.2%}'.format((i - 1) / t_lines)
     # print("\r请稍候，正在转换还款计划信息，处理第 %s/%s 条记录 ,已完成 %s" % ((i - 1), t_lines, doper), end='')
 cur.execute('select count(*) from PAI.loan_default;')
-print("\r" + "还款计划信息已转换完成！共输出 %s 条记录。" % (cur.fetchone()))
+print("\r" + "还款计划信息已转换完成！共输出 %s 条记录。" % (cur.fetchall()))
 
 # print("\n" + "文件转换完成！执行结束！")
