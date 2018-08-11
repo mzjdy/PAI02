@@ -2,29 +2,11 @@
 # -*- Richard(410982635@qq.com)
 # -*- 2018.08.01
 
-# 贷款借据-loan_iou
-#     协议编号,loan_id,chr(12);
-#     借据编号,iou_id,char(3);
-#     借据金额,iou_amount,float(12,2);
-#     借据币种,iou_currency,char(3); 001-人民币
-#     剩余本金,iou_remamount,float(12,2);
-#     借据利率,iou_rate,float(6,4);
-#     借据期限,iou_term,char(5);
-#     期限单位,iou_termunit,char(1); 0-天/1-月/2-季/3-年
-#     还款方式,iou_method,char(1); 0-等额本息/1-等额本金/2-先息后本
-#     还款顺序,repay_order,char(1); 0-费用_利息_本金/1-本金_利息_费用
-#     罚息利率,def_rate,float(6,4);
-#     提前还款标志,prepay_flag,char(1); 0-允许/1-不允许
-#     提前还款费率,prepay_fee,float(6,4);
-#     展期标志,change_flag,char(1); 0-允许/1-不允许
-#     展期费率,change_fee,float(6,4);
-#     生效日期,iou_effdate,date;
-#     到期日期,iou_duedate,date;
-#     借据状态,iou_stat,char(1); 0-正常/1-结清/2-逾期/3-其他
-
-import os
 import linecache
+import os
 import random
+
+from tqdm import *
 
 PWD = os.getcwd()
 file_loan_info = PWD + '/OutFiles/loan_agreement.txt'
@@ -45,14 +27,14 @@ except FileNotFoundError:
     os._exit(0)
 
 loanagr_lines = len(open(file_loan_info).readlines())
-print("找到 %s 条贷款协议数据，正在生成借据信息！" % (loanagr_lines - 1))
+print('\r' + "找到 %s 条贷款协议数据，正在生成借据信息……" % (loanagr_lines - 1))
 
 outfile = PWD + '/OutFiles/loan_iou.txt'
 title = "协议编号,借据编号,借据金额,借据币种,剩余本金,借据利率,借据期限,期限单位,还款方式,还款顺序,罚息利率," \
         "提前还款标志,提前还款费率,展期标志,展期费率,生效日期,到期日期,借据状态"
 open(outfile, "w").write(title + '\n')
 
-for i in range(2, loanagr_lines + 1):
+for i in tqdm(range(2, loanagr_lines + 1)):
     agreement = linecache.getline(file_loan_info, i).split(',')
     loan_id = agreement[1]
     iou_id = str(random.randint(100, 120))
@@ -85,9 +67,8 @@ for i in range(2, loanagr_lines + 1):
                  iou_effdate + ',' + iou_duedate + ',' + iou_stat
 
     # 输出文件
-    doper = '{:.2%}'.format(i / int(loanagr_lines))
-    print("\r请稍候，正在处理第 %s 条记录 ,已完成 %s" % (i - 1, doper), end='')
+    # doper = '{:.2%}'.format(i / int(loanagr_lines))
+    # print("\r请稍候，正在处理第 %s 条记录 ,已完成 %s" % (i - 1, doper), end='')
     open(outfile, 'a').write(iou_result + '\n')
-
 outfile_lines = len(open(outfile).readlines())
-print("\n" + "借据已生成！共 %s 条记录，输出文件 %s" % (outfile_lines - 1, outfile))
+print('\r' + "借据已生成！共 %s 条记录，输出文件 %s" % (outfile_lines - 1, outfile))

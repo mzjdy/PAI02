@@ -1,0 +1,47 @@
+DROP TABLE  customer_info;
+CREATE TABLE customer_info
+(
+    cus_id char(12) NOT NULL,
+    cus_name char(20),
+    cus_idtype char(1),
+    cus_idnum char(20),
+    cus_brith date,
+    cus_gender char(1),
+    cus_marry char(1),
+    cus_edu char(1),
+    cus_occ char(1),
+    cus_phone char(20),
+    cus_email char(50),
+    cus_livetype char(1),
+    cus_address char(100),
+    cus_bank char(100),
+    cus_cardcode char(1),
+    cus_cardname char(50),
+    cus_cardno char(20),
+    cre_branch char(10),
+    cre_teller char(10),
+    cre_datetime datetime
+);
+
+DROP TABLE loan_agreement;
+CREATE TABLE loan_agreement
+(
+    cus_id char(12) NOT NULL,
+    loan_id char(12) NOT NULL,
+    loan_code char(5),
+    loan_name char(100),
+    loan_usedcode char(10),
+    loan_usedname char(100),
+    loan_amount float(12,2),
+    loan_currency char(3),
+    loan_remamount float(12,2),
+    loan_rate float(6,4),
+    loan_term char(5),
+    loan_termunit char(1),
+    loan_guaran char(1),
+    loan_edddate date,
+    loan_duedate date,
+    loan_repaycardno char(20),
+    loan_branch char(10),
+    loan_status char(1)
+);
