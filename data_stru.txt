@@ -42,7 +42,7 @@
     贷款状态,loan_status,char(1); 0-正常/1-结清/2-逾期/3-其他
 
 3.贷款借据-loan_iou
-    协议编号,loan_id,chr(12);
+    协议编号,loan_id,char(12);
     借据编号,iou_id,char(3);
     借据金额,iou_amount,float(12,2);
     借据币种,iou_currency,char(3); 001-人民币
