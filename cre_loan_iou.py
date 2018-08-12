@@ -31,7 +31,7 @@ print('\r' + "找到 %s 条贷款协议数据，正在生成借据信息……" 
 
 outfile = PWD + '/OutFiles/loan_iou.txt'
 title = "协议编号,借据编号,借据金额,借据币种,剩余本金,借据利率,借据期限,期限单位,还款方式,还款顺序,罚息利率," \
-        "提前还款标志,提前还款费率,展期标志,展期费率,生效日期,到期日期,借据状态"
+        "提前还款标志,提前还款费率,展期标志,展期费率,生效日期,到期日期,借据状态,欠款期数,欠还利息,欠还本金,欠环金额"
 open(outfile, "w").write(title + '\n')
 
 for i in tqdm(range(2, loanagr_lines + 1)):
@@ -60,11 +60,16 @@ for i in tqdm(range(2, loanagr_lines + 1)):
     iou_effdate = agreement[13]
     iou_duedate = agreement[14]
     iou_stat = "0"
+    iou_defcount = "0"
+    iou_defint = "0.00"
+    iou_defprin = "0.00"
+    iou_defamount = "0.00"
     # 格式化输出内容
     iou_result = loan_id + ',' + iou_id + ',' + iou_amount + ',' + iou_currency + ',' + iou_remamount + ',' + \
                  iou_rate + ',' + iou_term + ',' + iou_termunit + ',' + iou_method + ',' + repay_order + ',' + \
                  def_rate + ',' + prepay_flag + ',' + prepay_fee + ',' + change_flag + ',' + change_fee + ',' + \
-                 iou_effdate + ',' + iou_duedate + ',' + iou_stat
+                 iou_effdate + ',' + iou_duedate + ',' + iou_stat + ',' + iou_defcount + ',' + iou_defint + ',' + \
+                 iou_defprin + ',' + iou_defamount
 
     # 输出文件
     open(outfile, 'a').write(iou_result + '\n')

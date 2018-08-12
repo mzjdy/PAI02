@@ -112,7 +112,7 @@ t_lines = len(t_data)
 print('\r' + "请稍候，正在转换贷款借据信息，原文件共 %s 条记录……" % (t_lines))
 for i in tqdm(range(2, t_lines + 2)):
     t_list = linecache.getline(file_iou, i).strip('\n').split(',')
-    sqli = 'insert into PAI.loan_iou(loan_id,iou_id,iou_amount,iou_cerrency,iou_remamount,iou_rate,iou_term,iou_termunit,iou_method,iou_repayorder,iou_defrate,iou_prepayflag,iou_prepayfee,iou_changeflag,iou_changefee,iou_effdate,iou_duedate,iou_status) values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)'
+    sqli = 'insert into PAI.loan_iou(loan_id,iou_id,iou_amount,iou_currency,iou_remamount,iou_rate,iou_term,iou_termunit,iou_method,iou_repayorder,iou_defrate,iou_prepayflag,iou_prepayfee,iou_changeflag,iou_changefee,iou_effdate,iou_duedate,iou_status) values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)'
     value = (
         t_list[0], t_list[1], t_list[2], t_list[3], t_list[4], t_list[5], t_list[6], t_list[7], t_list[8], t_list[9], t_list[10], t_list[11],
         t_list[12],

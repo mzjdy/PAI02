@@ -75,7 +75,7 @@ def get_loan_agreement():
     # 生成贷款金额、币种，初始化剩余本金=贷款本金，初始化贷款状态为"正常"
     preamount = random.randint(int(amount_mix), int(amount_max))
     loan_amount = str(preamount * 1000) + '.00'
-    loan_currency = '001'
+    loan_currency = '156'
     loan_remamount = loan_amount
     loan_stat = '0'
 

@@ -52,3 +52,5 @@ for i in tqdm(range(0, len(repaylist))):
     cur.execute(sqlu, (result, loanid))
     con.commit()
 print('\r' + '贷款借据表更新成功！')
+
+# 更新

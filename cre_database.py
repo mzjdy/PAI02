@@ -75,7 +75,7 @@ iou = '''
         loan_id varchar(12) NOT NULL primary key comment '协议编号',
         iou_id varchar(3) NOT NULL comment '借据编号',
         iou_amount double(12,2) comment '借据金额',
-        iou_cerrency varchar(3) comment '借据币种',
+        iou_currency varchar(3) comment '借据币种',
         iou_remamount double(12,2) comment '剩余本金',
         iou_rate double(6,4) comment '借据利率',
         iou_term varchar(5) comment '借据期限',
@@ -89,7 +89,11 @@ iou = '''
         iou_changefee double(6,4) comment '变更费率',
         iou_effdate date comment '生效日期',
         iou_duedate date comment '失效日期',
-        iou_status varchar(1) comment '借据状态'
+        iou_status varchar(1) comment '借据状态',
+        iou_defcount int commit '欠款期数',
+        iou_defint double(12,2) commit '欠还利息',
+        iou_defprin double(12,2) commit '欠还本金',
+        iou_defamount double(12,2) commit '欠款金额'
     );
 '''
 
