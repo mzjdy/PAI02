@@ -90,10 +90,11 @@ iou = '''
         iou_effdate date comment '生效日期',
         iou_duedate date comment '失效日期',
         iou_status varchar(1) comment '借据状态',
-        iou_defcount int commit '欠款期数',
-        iou_defint double(12,2) commit '欠还利息',
-        iou_defprin double(12,2) commit '欠还本金',
-        iou_defamount double(12,2) commit '欠款金额'
+        iou_defcount int(5) comment '欠款期数',
+        iou_defstart varchar(5) comment '起欠期数',
+        iou_defint double(12,2) comment '欠还利息',
+        iou_defprin double(12,2) comment '欠还本金',
+        iou_defamount double(12,2) comment '欠款金额'
     );
 '''
 

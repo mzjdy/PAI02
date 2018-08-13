@@ -1,92 +1,95 @@
 1.个人客户信息-customer_info
-    客户编号,cus_id,char(12);
-    客户姓名,cus_name,char(20);
-    证件类型,cus_idtype,char(1); 0-居民身份证
-    证件号码,cus_idnum,char(20);
+    客户编号,cus_id,varchar(12);
+    客户姓名,cus_name,varchar(20);
+    证件类型,cus_idtype,varchar(1); 0-居民身份证
+    证件号码,cus_idnum,varchar(20);
     出生日期,cus_brith,date;
-    客户性别,cus_gender,char(1); 0-男/1-女
-    婚姻状况,cus_marry,char(1); 0-已婚/1-未婚/2-其他
-    教育程度,cus_edu,char(1); 0-初中及以下/1-高中/2-大学/3-硕士研究生/4-博士研究生
-    客户职业,cus_occ,char(2); 0-公务员/1-事业员工/2-金融员工/3-公司职员/4-军人/5-学生/6-自由职业/7-其他
-    联系电话,cus_phone,char(20);
-    电子邮件,cus_email,char(50);
-    居住类型,cus_livetype,char(1); 0-自有无贷款/1-自有有贷款/2-租赁/3-宿舍/4-其他
-    居住地址,cus_address,char(100);
-    开户银行,cus_bank,char(100);
-    卡种代码,cus_cardcode,char(2); 1-借记卡/2-贷记卡/3-准贷记卡/4-预付费卡
-    卡种名称,cus_cardname,char(20);
-    银行卡号,cus_cardno,char(20);
-    创建机构,cre_branch,char(10);
-    创建柜员,cre_teller,char(10);
-    创建日期,cre_date,date;
-    创建时间,cre_time,time;
+    客户性别,cus_gender,varchar(1); 0-男/1-女
+    婚姻状况,cus_marry,varchar(1); 0-已婚/1-未婚/2-其他
+    教育程度,cus_edu,varchar(1); 0-初中及以下/1-高中/2-大学/3-硕士研究生/4-博士研究生
+    客户职业,cus_occ,varchar(2); 0-公务员/1-事业员工/2-金融员工/3-公司职员/4-军人/5-学生/6-自由职业/7-其他
+    联系电话,cus_phone,varchar(20);
+    电子邮件,cus_email,varchar(50);
+    居住类型,cus_livetype,varchar(1); 0-自有无贷款/1-自有有贷款/2-租赁/3-宿舍/4-其他
+    居住地址,cus_address,varchar(100);
+    开户银行,cus_bank,varchar(100);
+    卡种代码,cus_cardcode,varchar(2); 1-借记卡/2-贷记卡/3-准贷记卡/4-预付费卡
+    卡种名称,cus_cardname,varchar(20);
+    银行卡号,cus_cardno,varchar(20);
+    创建机构,cre_branch,varchar(10);
+    创建柜员,cre_teller,varchar(10);
+    创建时间,cre_datetime,datetime;
 
 2.贷款协议-loan_agreement
-    客户编号,cus_id,char(12);
-    协议编号,loan_id,char(12);
-    产品编号,loan_code,char(5);
-    产品名称,loan_name,char(100);
-    用途代码,loan_usedcode,char(10);
-    贷款用途,loan_used,char(100);
-    贷款金额,loan_amount,float(12,2);
-    贷款币种,loan_currency,char(3); 001-人民币
-    剩余本金,loan_remamount,float(12,2);
-    贷款利率,loan_rate,float(6,4);
-    贷款期限,loan_term,char(5);
-    期限单位,loan_termunit,char(1); 0-天/1-月/2-季/3-年
-    担保方式,loan_guaran,char(1); 0-信用/1-抵押/2-质押/3-保证
+    客户编号,cus_id,varchar(12);
+    协议编号,loan_id,varchar(12);
+    产品编号,loan_code,varchar(5);
+    产品名称,loan_name,varchar(100);
+    用途代码,loan_usedcode,varchar(10);
+    贷款用途,loan_used,varchar(100);
+    贷款金额,loan_amount,double(12,2);
+    贷款币种,loan_currency,varchar(3); 001-人民币
+    剩余本金,loan_remamount,double(12,2);
+    贷款利率,loan_rate,double(6,4);
+    贷款期限,loan_term,varchar(5);
+    期限单位,loan_termunit,varchar(1); 0-天/1-月/2-季/3-年
+    担保方式,loan_guaran,varchar(1); 0-信用/1-抵押/2-质押/3-保证
     生效日期,loan_effdate,date;
     到期日期,loan_duedate,date;
-    还款卡号,loan_repaycardno,char(20);
-    贷款机构,loan_branch,char(10);
-    贷款状态,loan_status,char(1); 0-正常/1-结清/2-逾期/3-其他
+    还款卡号,loan_repaycardno,varchar(20);
+    贷款机构,loan_branch,varchar(10);
+    贷款状态,loan_status,varchar(1); 0-正常/1-结清/2-逾期/3-其他
 
 3.贷款借据-loan_iou
-    协议编号,loan_id,char(12);
-    借据编号,iou_id,char(3);
-    借据金额,iou_amount,float(12,2);
-    借据币种,iou_currency,char(3); 001-人民币
-    剩余本金,iou_remamount,float(12,2);
-    借据利率,iou_rate,float(6,4);
-    借据期限,iou_term,char(5);
-    期限单位,iou_termunit,char(1); 0-天/1-月/2-季/3-年
-    还款方式,iou_method,char(1); 0-等额本息/1-等额本金/2-先息后本
-    还款顺序,iou_repayorder,char(1); 0-费用_利息_本金/1-本金_利息_费用
-    罚息利率,iou_defrate,float(6,4);
-    提前还款标志,iou_prepayflag,char(1); 0-允许/1-不允许
-    提前还款费率,iou_prepayfee,float(6,4);
-    展期标志,iou_changeflag,char(1); 0-允许/1-不允许
-    展期费率,iou_changefee,float(6,4);
+    协议编号,loan_id,varchar(12);
+    借据编号,iou_id,varchar(3);
+    借据金额,iou_amount,double(12,2);
+    借据币种,iou_currency,varchar(3); 001-人民币
+    剩余本金,iou_remamount,double(12,2);
+    借据利率,iou_rate,double(6,4);
+    借据期限,iou_term,varchar(5);
+    期限单位,iou_termunit,varchar(1); 0-天/1-月/2-季/3-年
+    还款方式,iou_method,varchar(1); 0-等额本息/1-等额本金/2-先息后本
+    还款顺序,iou_repayorder,varchar(1); 0-费用_利息_本金/1-本金_利息_费用
+    罚息利率,iou_defrate,double(6,4);
+    提前还款标志,iou_prepayflag,varchar(1); 0-允许/1-不允许
+    提前还款费率,iou_prepayfee,double(6,4);
+    展期标志,iou_changeflag,varchar(1); 0-允许/1-不允许
+    展期费率,iou_changefee,double(6,4);
     生效日期,iou_effdate,date;
     到期日期,iou_duedate,date;
-    借据状态,iou_status,char(1); 0-正常/1-结清/2-逾期/3-其他
+    借据状态,iou_status,varchar(1); 0-正常/1-结清/2-逾期/3-其他
+    欠款期数,iou_defcount,int;
+    欠还利息,iou_defint,double(12,2);
+    欠还本金,iou_defprin,double(12,2);
+    欠款金额,iou_defamount,double(12,2);
 
 4.还款计划-repay_plan
-    协议编号,loan_id,chr(12);
-    借据编号,iou_id,char(3);
-    还款期数,repay_serial,char(5);
+    协议编号,loan_id,varchar(12);
+    借据编号,iou_id,varchar(3);
+    还款期数,repay_serial,varchar(5);
     应还日期,repay_date,date;
-    应还利息,repay_int,float(12,2);
-    应还本金,repay_prin,float(12,2);
-    应还本息,repay_amount,float(12,2);
-    还款标志,return_flag,char(1); 0-未到还款日/1-正常还款/2-部分还款/3-逾期未还
+    应还利息,repay_int,double(12,2);
+    应还本金,repay_prin,double(12,2);
+    应还本息,repay_amount,double(12,2);
+    还款标志,return_flag,varchar(1); 0-未到还款日/1-正常还款/2-部分还款/3-逾期未还
 
 5.还款历史-repay_history
-    协议编号,loan_id,chr(12);
-    借据编号,iou_id,char(3);
-    还款期数,return_bill,char(5);
+    协议编号,loan_id,varchar(12);
+    借据编号,iou_id,varchar(3);
+    还款期数,return_bill,varchar(5);
     还款日期,return_date,date;
-    实还利息,return_int,float(12,2);
+    实还利息,return_int,double(12,2);
     实还本金,return_prin,flost(12,2);
-    还款金额,return_amount,float(12,2);
-    还款标志,return_flag,char(1);
+    还款金额,return_amount,double(12,2);
+    还款标志,return_flag,varchar(1);
 
 6.贷款违约-loan_default
-    协议编号,loan_id,chr(12);
-    借据编号,iou_id,char(3);
-    还款期数,repay_serial,char(5);
+    协议编号,loan_id,varchar(12);
+    借据编号,iou_id,varchar(3);
+    还款期数,repay_serial,varchar(5);
     应还日期,repay_date,date;
-    欠还利息,def_int,float(12,2);
-    欠还本金,def_prin,float(12,2);
-    欠款本息,def_amount,float(12,2);
-    还款标志,return_flag,char(1);
+    欠还利息,def_int,double(12,2);
+    欠还本金,def_prin,double(12,2);
+    欠款本息,def_amount,double(12,2);
+    还款标志,return_flag,varchar(1);
