@@ -2,11 +2,30 @@
 # -*- Richard(410982635@qq.com)
 # -*- 2018.08.08
 
+import os
+from xml.dom.minidom import *
+
 import pymysql
+
+# 读取数据库配置文件
+PWD = os.getcwd()
+cfgfile = PWD + '/Parameters/mysql_cfg.xml'
+try:
+    f1 = open(cfgfile)
+    f1.close()
+except FileNotFoundError:
+    print("发现错误：数据库配置文件 \"%s\" 不存在！" % cfgfile)
+    os._exit(0)
+dom = parse(cfgfile)
+cfglist = dom.documentElement
+cfg_user = cfglist.getElementsByTagName('user')[0].firstChild.data
+cfg_passwd = cfglist.getElementsByTagName('password')[0].firstChild.data
+cfg_db = cfglist.getElementsByTagName('database')[0].firstChild.data
+cfg_char = cfglist.getElementsByTagName('charset')[0].firstChild.data
 
 # 连接mySQL服务器
 print('正在连接mySQL服务器……')
-con = pymysql.connect(user='python', passwd='pythonpwd', charset='utf8')
+con = pymysql.connect(user=cfg_user, passwd=cfg_passwd, charset=cfg_char)
 print('服务器连接成功！')
 cur = con.cursor()
 

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<config>
+    <mysqlcfg>
+        <protocol>http</protocol>
+        <hostip>127.0.0.1</hostip>
+        <hostname>localhost</hostname>
+        <port>3306</port>
+        <user>python</user>
+        <password>pythonpwd</password>
+        <database>PAI</database>
+        <charset>utf8</charset>
+    </mysqlcfg>
+</config>

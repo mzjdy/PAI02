@@ -5,6 +5,6 @@ OK 计算程序执行的总时间（hms格式）>>main.py
 OK mySQL建库、建表>>cre_database.py
 OK 更新还款标志1-结清>>UpdateAmount.py
 OK 更新还款标志2-逾期，更新借据中的违约金额、违约期数>>UpdateAmount.py
+OK 通过xml文件配置连接数据库参数>>database_config.xml
 
-PASS 通过xml文件配置连接数据库参数>>database_config.xml
 PASS 封装包文件
