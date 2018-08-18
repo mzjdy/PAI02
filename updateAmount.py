@@ -3,10 +3,9 @@
 # -*- 2018.08.09
 
 import os
+import pymysql
 from decimal import *
 from xml.dom.minidom import *
-
-import pymysql
 from tqdm import *
 
 # 读取数据库配置文件、连接mySQL服务器

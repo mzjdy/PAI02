@@ -6,7 +6,6 @@ import datetime
 import linecache
 import os
 from decimal import *
-
 from dateutil.relativedelta import relativedelta
 from tqdm import *
 

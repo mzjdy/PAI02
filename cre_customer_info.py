@@ -7,7 +7,6 @@ import linecache
 import os
 import random
 import time
-
 from luhn import *
 from tqdm import *
 

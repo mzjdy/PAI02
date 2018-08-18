@@ -6,7 +6,6 @@ import datetime
 import os
 import random
 import time
-
 from tqdm import *
 
 PWD = os.getcwd()

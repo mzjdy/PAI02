@@ -4,9 +4,8 @@
 
 import linecache
 import os
-from xml.dom.minidom import *
-
 import pymysql
+from xml.dom.minidom import *
 from tqdm import *
 
 # 判断依赖文件蝇否存在

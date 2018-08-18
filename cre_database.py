@@ -30,10 +30,14 @@ print('服务器连接成功！')
 cur = con.cursor()
 
 # 重建PAI库
-cur.execute('DROP SCHEMA IF EXISTS PAI;')
-cur.execute('CREATE SCHEMA IF NOT EXISTS PAI;')
+# cur.execute('DROP SCHEMA IF EXISTS PAI;')
+# cur.execute('CREATE SCHEMA IF NOT EXISTS PAI;')
+# con.commit()
+# print('数据库(PAI)已成功创建！')
+cur.execute('DROP SCHEMA IF EXISTS %s;' % cfg_db)
+cur.execute('CREATE SCHEMA IF NOT EXISTS %s;' % cfg_db)
 con.commit()
-print('数据库(PAI)已成功创建！')
+print('数据库(%s)已成功创建！' % cfg_db)
 
 # 创建个人客户信息表
 cus = '''
@@ -161,7 +165,7 @@ defa = '''
         return_flag varchar(1) comment '还款标志'
     );
 '''
-cur.execute('USE PAI;')
+cur.execute('USE %s;' % cfg_db)
 cur.execute(cus)
 print('个人客户信息数据表(customer_info)已成功创建！')
 cur.execute(agree)

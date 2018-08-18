@@ -5,7 +5,6 @@
 import linecache
 import os
 import random
-
 from tqdm import *
 
 PWD = os.getcwd()

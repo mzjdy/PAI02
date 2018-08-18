@@ -8,3 +8,5 @@ OK 更新还款标志2-逾期，更新借据中的违约金额、违约期数>>U
 OK 通过xml文件配置连接数据库参数>>database_config.xml
 
 PASS 封装包文件
+
+应用Django，部署至web
